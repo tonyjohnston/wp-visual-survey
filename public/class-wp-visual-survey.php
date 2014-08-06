@@ -73,13 +73,13 @@ class WP_Visual_Survey
         // For all users, always
         add_action('init', array($this, 'register_cpts'));
 
-        // Dependencies
+/*        // Dependencies
         if (!is_plugin_active('advanced-custom-fields/acf.php') || !function_exists('acf_register_repeater_field')) {
 
             add_action('admin_init', array(self, 'deactivate'));
             add_action('admin_notices', array(self, 'display_unmet_dependencies_notice'));
 
-        }
+        }*/
 
     }
 
@@ -117,8 +117,8 @@ class WP_Visual_Survey
 
         if (!is_plugin_active('advanced-custom-fields/acf.php') || !function_exists('acf_register_repeater_field')) {
 
-            add_action('admin_init', array(self, 'deactivate'));
-            add_action('admin_notices', array(self, 'display_unmet_dependencies_notice'));
+            add_action('admin_init', array(__CLASS_, 'deactivate'));
+            add_action('admin_notices', array(__CLASS__, 'display_unmet_dependencies_notice'));
             return;
         }
 
@@ -369,6 +369,7 @@ class WP_Visual_Survey
 
         $questions = get_field('question_group');
         if (is_array($field) && !empty($field)) {
+            $choices = array();
             foreach ($field['sub_fields'] as $key => $value) {
                 if (is_array($questions[$key])) {
                     $field['sub_fields'][$key]['label'] = $questions[$key]['question'];
@@ -421,7 +422,6 @@ class WP_Visual_Survey
      */
     public function ajax_visual_survey_results($args)
     {
-        error_log('AJAX VSURVEYRESULTS');
         if (empty($args)) {
             $args = $_POST;
         }
@@ -429,8 +429,10 @@ class WP_Visual_Survey
             try {
                 $data = $args['data'];
                 $result_qualities = get_field('results_qualities', $args['post_id']);
+                $response = array();
                 if (!empty($result_qualities) && is_array($result_qualities)) {
                     $count = 0;
+                    $best_fit = array();
                     foreach ($result_qualities as $results) {
                         $answers = array();
                         foreach ($results['results_qualities'][0] as $questions) {
