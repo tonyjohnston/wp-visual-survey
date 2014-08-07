@@ -115,12 +115,12 @@ class WP_Visual_Survey
     {
         // Plugin requires ACF 4.0+ and Repeater field add-on
 
-        if (!is_plugin_active('advanced-custom-fields/acf.php') || !function_exists('acf_register_repeater_field')) {
+/*        if (!is_plugin_active('advanced-custom-fields/acf.php') || !function_exists('acf_register_repeater_field')) {
 
             add_action('admin_init', array(__CLASS_, 'deactivate'));
             add_action('admin_notices', array(__CLASS__, 'display_unmet_dependencies_notice'));
             return;
-        }
+        }*/
 
         if (function_exists('is_multisite') && is_multisite()) {
 
