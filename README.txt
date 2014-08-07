@@ -21,7 +21,10 @@ final "results" layout with share buttons.
 
 == Installation ==
 
-This plugin requires Advanced Custom Fields with its Repeater add-on. Installation will fail if ACF+Repeater
+Basically, jsut don't use this right now. I'm in the process of pulling out dependencies on 3rd party plugins. There is 
+nothing functional about it until I get that fixed.
+
+Currently, this plugin requires Advanced Custom Fields with its Repeater add-on. Installation will fail if ACF+Repeater
 is not installed.
 
 = Using The WordPress Dashboard =
